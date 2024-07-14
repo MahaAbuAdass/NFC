@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/main">
+
+    <fragment
+        android:id="@+id/main"
+        android:name="com.example.nfcdemo.HomeScreen"
+        tools:layout="@layout/main_screen">
+        <action
+            android:id="@+id/action_main_to_readFragment"
+            app:destination="@id/readFragment" />
+        <action
+            android:id="@+id/action_main_to_write"
+            app:destination="@id/write" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/readFragment"
+        android:name="com.example.nfcdemo.ReadFragment"
+        tools:layout="@layout/read_nfc_tag"
+        android:label="ReadFragment" >
+        <action
+            android:id="@+id/action_readFragment_to_write"
+            app:destination="@id/write" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/write"
+        android:name="com.example.nfcdemo.WriteFragment"
+        tools:layout="@layout/write_nfc_tag"
+        />
+</navigation>
