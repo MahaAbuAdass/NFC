@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_readFragment_to_write"
             app:destination="@id/write" />
+        <action
+            android:id="@+id/action_readFragment_to_loader_read"
+            app:destination="@id/loader_read" />
     </fragment>
 
     <fragment
@@ -41,6 +44,13 @@
         android:id="@+id/loader_write"
         android:name="com.example.nfcdemo.WriteLoader"
         tools:layout="@layout/loader_write_fragment"
+        />
+
+
+    <fragment
+        android:id="@+id/loader_read"
+        android:name="com.example.nfcdemo.ReadLoaderFragment"
+        tools:layout="@layout/loader_read_fragment"
         />
 
 
