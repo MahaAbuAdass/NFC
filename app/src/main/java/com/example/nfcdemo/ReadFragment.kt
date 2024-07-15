@@ -6,6 +6,8 @@ import android.content.IntentFilter
 import android.nfc.NfcAdapter
 import android.nfc.Tag
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +23,10 @@ class ReadFragment : Fragment(), NfcFragment {
     private lateinit var binding: ReadNfcTagBinding
     private lateinit var nfcAdapter: NfcAdapter
     private var bottomSheetDialog: BottomSheetDialog? = null
+    private val handler = Handler(Looper.getMainLooper())
+    private val timeoutRunnable = Runnable {
+        hideBottomSheet("No tag detected. Please try again.", false)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,8 +43,8 @@ class ReadFragment : Fragment(), NfcFragment {
         binding.readButton.setOnClickListener {
             showBottomSheet()
             binding.detectionStatusTextView.text = "Scanning for NFC tags..."
-            // Start NFC reading
             enableNfc()
+            handler.postDelayed(timeoutRunnable, 10000) // 10 seconds timeout
         }
 
         binding.btnWrite.setOnClickListener {
@@ -54,15 +60,15 @@ class ReadFragment : Fragment(), NfcFragment {
     override fun onPause() {
         super.onPause()
         disableNfc()
+        handler.removeCallbacks(timeoutRunnable) // Remove timeout callback if the fragment is paused
     }
 
     override fun onNfcIntent(intent: Intent) {
         if (NfcAdapter.ACTION_TAG_DISCOVERED == intent.action) {
             val tag: Tag? = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG)
-            // Read NFC tag data here
             binding.tagContentTextView.text = "NFC Tag detected!"
-            binding.detectionStatusTextView.text = ""
-            hideBottomSheet("Read successful!")
+            handler.removeCallbacks(timeoutRunnable) // Remove timeout callback if tag is detected
+            hideBottomSheet("Read successful!", true)
         }
     }
 
@@ -93,14 +99,20 @@ class ReadFragment : Fragment(), NfcFragment {
 
         // Set cancel button listener
         view.findViewById<Button>(R.id.cancelLoaderButton).setOnClickListener {
-            hideBottomSheet("Scan canceled")
+            handler.removeCallbacks(timeoutRunnable) // Remove timeout callback if cancelled
+            hideBottomSheet("Scan canceled", false)
         }
     }
 
-    private fun hideBottomSheet(message: String) {
+    private fun hideBottomSheet(message: String, isSuccess: Boolean) {
         Log.d(TAG, "Hiding bottom sheet...")
         bottomSheetDialog?.dismiss()
         binding.detectionStatusTextView.text = message
+        if (isSuccess) {
+            binding.tagContentTextView.text = "✔️ $message"
+        } else {
+            binding.tagContentTextView.text = "❌ $message"
+        }
     }
 
     companion object {
