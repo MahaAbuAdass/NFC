@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/mainbg"
     android:padding="30dp">
 
 
@@ -14,11 +15,15 @@
         android:layout_height="wrap_content"
         android:text="Read NFC"
         android:textColor="@android:color/white"
-        android:background="@drawable/button_rounded_background"
         android:paddingTop="8dp"
+        android:backgroundTint="@color/blue"
+        android:layout_marginTop="432dp"
         android:paddingBottom="8dp"
 
         />
+
+
+
 
     <Button
         android:layout_width="match_parent"
@@ -26,8 +31,8 @@
         android:text="Write NFC"
         app:layout_constraintTop_toBottomOf="@id/btn_read"
         android:id="@+id/btn_write"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/button_rounded_background"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/blue"
 
         />
 

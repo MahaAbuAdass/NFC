@@ -31,5 +31,18 @@
         android:id="@+id/write"
         android:name="com.example.nfcdemo.WriteFragment"
         tools:layout="@layout/write_nfc_tag"
+        >
+        <action
+            android:id="@+id/action_write_to_loader_write"
+            app:destination="@id/loader_write" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/loader_write"
+        android:name="com.example.nfcdemo.WriteLoader"
+        tools:layout="@layout/loader_write_fragment"
         />
+
+
+
 </navigation>
