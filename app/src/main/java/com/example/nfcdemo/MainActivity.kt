@@ -19,6 +19,8 @@ class MainActivity : AppCompatActivity() {
             val currentFragment = navHostFragment.childFragmentManager.fragments[0]
             if (currentFragment is NfcFragment) {
                 currentFragment.onNfcIntent(it)
+
+
             }
         }
     }
