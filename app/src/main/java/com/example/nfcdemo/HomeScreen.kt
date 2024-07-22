@@ -10,6 +10,9 @@ import com.example.nfcdemo.databinding.MainScreenBinding
 
 class HomeScreen : Fragment() {
 
+
+
+
     private lateinit var binding : MainScreenBinding
 
 
